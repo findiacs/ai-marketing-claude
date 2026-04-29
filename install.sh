@@ -1,8 +1,6 @@
 #!/bin/bash
-# AI Marketing Suite — Claude Code Skills Installer
-# Installs marketing skills, agents, and scripts into Claude Code
-
-set -e
+# AI Marketing Suite — Universal Agent Skills Installer
+# Installs marketing skills, agents, and scripts for Claude Code, Antigravity, Gemini, Codex, Qwen Code, Cursor, and Goose.
 
 # Colors
 RED='\033[0;31m'
@@ -14,7 +12,7 @@ NC='\033[0m'
 
 echo ""
 echo -e "${CYAN}╔══════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║   AI Marketing Suite — Claude Code Skills    ║${NC}"
+echo -e "${CYAN}║   AI Marketing Suite — Agent Skills          ║${NC}"
 echo -e "${CYAN}║   15 Skills · 5 Agents · 4 Scripts · PDF     ║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════╝${NC}"
 echo ""
@@ -29,138 +27,154 @@ else
     git clone --depth 1 https://github.com/zubair-trabzada/ai-marketing-claude.git "$TEMP_DIR/ai-marketing-claude" 2>/dev/null
     if [ $? -ne 0 ]; then
         echo -e "${RED}Failed to clone repository.${NC}"
-        exit 1
+        # We use return instead of exit so it doesn't break source
+        return 1 2>/dev/null || true
     fi
     SCRIPT_DIR="$TEMP_DIR/ai-marketing-claude"
 fi
 
-# Target directories
-SKILLS_DIR="$HOME/.claude/skills"
-AGENTS_DIR="$HOME/.claude/agents"
-
 echo -e "${BLUE}Source:${NC}  $SCRIPT_DIR"
-echo -e "${BLUE}Target:${NC} $SKILLS_DIR"
+
+# Determine target directories
+LOCAL_INSTALL=false
+if [ "$1" == "--local" ]; then
+    LOCAL_INSTALL=true
+    echo -e "${BLUE}Mode:${NC}    Local Workspace Install"
+else
+    echo -e "${BLUE}Mode:${NC}    Global Universal Install"
+fi
 echo ""
 
-# Check if Claude Code is available
-if command -v claude &>/dev/null; then
-    echo -e "${GREEN}✓ Claude Code detected${NC}"
+# Array of target directories
+TARGET_DIRS=()
+
+if [ "$LOCAL_INSTALL" = true ]; then
+    TARGET_DIRS=("$PWD/.agent/skills" "$PWD/.claude/skills" "$PWD/.gemini/skills")
 else
-    echo -e "${YELLOW}⚠ Claude Code not found in PATH${NC}"
-    if [ -t 0 ]; then
-        read -p "  Continue anyway? (y/n): " -n 1 -r
-        echo
-        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-            echo "Installation cancelled."
-            exit 0
-        fi
-    else
-        echo "  Continuing (non-interactive mode)..."
-    fi
+    # Standard Agent Skills Global Locations
+    TARGET_DIRS=(
+        "$HOME/.claude/skills"
+        "$HOME/.gemini/antigravity/skills"
+        "$HOME/.gemini/skills"
+        "$HOME/.codex/skills"
+        "$HOME/.qwen/skills"
+        "$HOME/.cursor/skills"
+        "$HOME/.jules/skills"
+        "$HOME/.opencode/skills"
+        "$HOME/.config/goose/skills"
+        "$HOME/.agent/skills"
+    )
 fi
 
-# Create directories
-echo -e "\n${BLUE}Creating directories...${NC}"
-mkdir -p "$SKILLS_DIR"
-mkdir -p "$AGENTS_DIR"
+# We only copy the agents to specific clients that use a separate agents folder
+AGENT_DIRS=()
+if [ "$LOCAL_INSTALL" = true ]; then
+    AGENT_DIRS=("$PWD/.agent/agents" "$PWD/.claude/agents")
+else
+    AGENT_DIRS=(
+        "$HOME/.claude/agents"
+        "$HOME/.gemini/agents"
+        "$HOME/.qwen/agents"
+    )
+fi
 
-# Install main skill orchestrator
-echo -e "${BLUE}Installing main skill...${NC}"
-mkdir -p "$SKILLS_DIR/market"
-cp "$SCRIPT_DIR/market/SKILL.md" "$SKILLS_DIR/market/SKILL.md"
-echo -e "  ${GREEN}✓${NC} market/SKILL.md (orchestrator)"
+# Define the installation function
+install_to_dir() {
+    local TARGET_SKILLS_DIR=$1
+    echo -e "${BLUE}Installing to:${NC} $TARGET_SKILLS_DIR"
 
-# Install sub-skills
-echo -e "\n${BLUE}Installing sub-skills...${NC}"
-SKILLS=(
-    "market-audit"
-    "market-copy"
-    "market-emails"
-    "market-social"
-    "market-ads"
-    "market-funnel"
-    "market-competitors"
-    "market-landing"
-    "market-launch"
-    "market-proposal"
-    "market-report"
-    "market-report-pdf"
-    "market-seo"
-    "market-brand"
-)
+    mkdir -p "$TARGET_SKILLS_DIR"
 
-SKILL_COUNT=0
-for skill in "${SKILLS[@]}"; do
-    if [ -f "$SCRIPT_DIR/skills/$skill/SKILL.md" ]; then
-        mkdir -p "$SKILLS_DIR/$skill"
-        cp "$SCRIPT_DIR/skills/$skill/SKILL.md" "$SKILLS_DIR/$skill/SKILL.md"
-        echo -e "  ${GREEN}✓${NC} $skill"
-        SKILL_COUNT=$((SKILL_COUNT + 1))
-    else
-        echo -e "  ${YELLOW}⚠${NC} $skill (not found, skipping)"
-    fi
-done
+    # Install main skill orchestrator
+    mkdir -p "$TARGET_SKILLS_DIR/market"
+    cp "$SCRIPT_DIR/market/SKILL.md" "$TARGET_SKILLS_DIR/market/SKILL.md"
 
-# Install agents
-echo -e "\n${BLUE}Installing agents...${NC}"
-AGENTS=(
-    "market-content"
-    "market-conversion"
-    "market-competitive"
-    "market-technical"
-    "market-strategy"
-)
+    # Install sub-skills
+    SKILLS=(
+        "market-audit"
+        "market-copy"
+        "market-emails"
+        "market-social"
+        "market-ads"
+        "market-funnel"
+        "market-competitors"
+        "market-landing"
+        "market-launch"
+        "market-proposal"
+        "market-report"
+        "market-report-pdf"
+        "market-seo"
+        "market-brand"
+    )
 
-AGENT_COUNT=0
-for agent in "${AGENTS[@]}"; do
-    if [ -f "$SCRIPT_DIR/agents/$agent.md" ]; then
-        cp "$SCRIPT_DIR/agents/$agent.md" "$AGENTS_DIR/$agent.md"
-        echo -e "  ${GREEN}✓${NC} $agent"
-        AGENT_COUNT=$((AGENT_COUNT + 1))
-    else
-        echo -e "  ${YELLOW}⚠${NC} $agent (not found, skipping)"
-    fi
-done
-
-# Install scripts
-echo -e "\n${BLUE}Installing scripts...${NC}"
-SCRIPTS_TARGET="$SKILLS_DIR/market/scripts"
-mkdir -p "$SCRIPTS_TARGET"
-
-SCRIPT_FILES=(
-    "analyze_page.py"
-    "competitor_scanner.py"
-    "social_calendar.py"
-    "generate_pdf_report.py"
-)
-
-SCRIPT_COUNT=0
-for script in "${SCRIPT_FILES[@]}"; do
-    if [ -f "$SCRIPT_DIR/scripts/$script" ]; then
-        cp "$SCRIPT_DIR/scripts/$script" "$SCRIPTS_TARGET/$script"
-        chmod +x "$SCRIPTS_TARGET/$script"
-        echo -e "  ${GREEN}✓${NC} $script"
-        SCRIPT_COUNT=$((SCRIPT_COUNT + 1))
-    else
-        echo -e "  ${YELLOW}⚠${NC} $script (not found, skipping)"
-    fi
-done
-
-# Install templates
-echo -e "\n${BLUE}Installing templates...${NC}"
-TEMPLATES_TARGET="$SKILLS_DIR/market/templates"
-mkdir -p "$TEMPLATES_TARGET"
-
-TEMPLATE_COUNT=0
-if [ -d "$SCRIPT_DIR/templates" ]; then
-    for template in "$SCRIPT_DIR/templates"/*.md; do
-        if [ -f "$template" ]; then
-            cp "$template" "$TEMPLATES_TARGET/$(basename "$template")"
-            echo -e "  ${GREEN}✓${NC} $(basename "$template")"
-            TEMPLATE_COUNT=$((TEMPLATE_COUNT + 1))
+    for skill in "${SKILLS[@]}"; do
+        if [ -f "$SCRIPT_DIR/skills/$skill/SKILL.md" ]; then
+            mkdir -p "$TARGET_SKILLS_DIR/$skill"
+            cp "$SCRIPT_DIR/skills/$skill/SKILL.md" "$TARGET_SKILLS_DIR/$skill/SKILL.md"
         fi
     done
-fi
+
+    # Install scripts
+    SCRIPTS_TARGET="$TARGET_SKILLS_DIR/market/scripts"
+    mkdir -p "$SCRIPTS_TARGET"
+
+    SCRIPT_FILES=(
+        "analyze_page.py"
+        "competitor_scanner.py"
+        "social_calendar.py"
+        "generate_pdf_report.py"
+    )
+
+    for script in "${SCRIPT_FILES[@]}"; do
+        if [ -f "$SCRIPT_DIR/scripts/$script" ]; then
+            cp "$SCRIPT_DIR/scripts/$script" "$SCRIPTS_TARGET/$script"
+            chmod +x "$SCRIPTS_TARGET/$script"
+        fi
+    done
+
+    # Install templates
+    TEMPLATES_TARGET="$TARGET_SKILLS_DIR/market/templates"
+    mkdir -p "$TEMPLATES_TARGET"
+
+    if [ -d "$SCRIPT_DIR/templates" ]; then
+        for template in "$SCRIPT_DIR/templates"/*.md; do
+            if [ -f "$template" ]; then
+                cp "$template" "$TEMPLATES_TARGET/$(basename "$template")"
+            fi
+        done
+    fi
+}
+
+install_agents_to_dir() {
+    local TARGET_AGENTS_DIR=$1
+    mkdir -p "$TARGET_AGENTS_DIR"
+
+    AGENTS=(
+        "market-content"
+        "market-conversion"
+        "market-competitive"
+        "market-technical"
+        "market-strategy"
+    )
+
+    for agent in "${AGENTS[@]}"; do
+        if [ -f "$SCRIPT_DIR/agents/$agent.md" ]; then
+            cp "$SCRIPT_DIR/agents/$agent.md" "$TARGET_AGENTS_DIR/$agent.md"
+        fi
+    done
+}
+
+echo -e "\n${BLUE}Copying files...${NC}"
+
+# Iterate over all target skill directories
+for dir in "${TARGET_DIRS[@]}"; do
+    install_to_dir "$dir"
+done
+
+# Iterate over all target agent directories
+for dir in "${AGENT_DIRS[@]}"; do
+    install_agents_to_dir "$dir"
+done
 
 # Install Python dependencies
 echo -e "\n${BLUE}Checking Python dependencies...${NC}"
@@ -196,10 +210,7 @@ echo -e "${GREEN}╔════════════════════
 echo -e "${GREEN}║           Installation Complete!              ║${NC}"
 echo -e "${GREEN}╚══════════════════════════════════════════════╝${NC}"
 echo ""
-echo -e "  Skills installed:    ${GREEN}$SKILL_COUNT${NC}"
-echo -e "  Agents installed:    ${GREEN}$AGENT_COUNT${NC}"
-echo -e "  Scripts installed:   ${GREEN}$SCRIPT_COUNT${NC}"
-echo -e "  Templates installed: ${GREEN}$TEMPLATE_COUNT${NC}"
+echo -e "  Skills successfully installed across supported platforms."
 echo ""
 echo -e "${CYAN}Available Commands:${NC}"
 echo "  /market audit <url>        Full marketing audit (5 parallel agents)"
@@ -218,5 +229,5 @@ echo "  /market report-pdf <url>   Marketing report (PDF)"
 echo "  /market seo <url>          SEO content audit"
 echo "  /market brand <url>        Brand voice analysis"
 echo ""
-echo -e "  ${YELLOW}Start a new Claude Code session to use the skills.${NC}"
+echo -e "  ${YELLOW}Restart your AI Agent CLI or IDE to use the skills.${NC}"
 echo ""

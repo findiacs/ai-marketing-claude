@@ -47,7 +47,7 @@ Store this page map for all subagents to reference.
 
 ## Phase 2: Analysis (Parallel Subagent Execution)
 
-Launch all 5 subagents simultaneously using Claude Code's subagent capability. Each subagent receives the business type, page map, and fetched content.
+Launch all 5 subagents simultaneously using the AI Assistant's subagent capability. Each subagent receives the business type, page map, and fetched content.
 
 ### Subagent 1: market-content
 

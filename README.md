@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="banner.svg" alt="AI Marketing Suite for Claude Code" width="100%">
+  <img src="banner.svg" alt="Universal AI Marketing Suite" width="100%">
 </p>
 
-# AI Marketing Suite for Claude Code
+# Universal AI Marketing Suite
 
-A comprehensive marketing analysis and automation skill system for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Audit any website's marketing, generate copy, build email sequences, create content calendars, analyze competitors, and produce client-ready PDF reports — all from your terminal.
+A comprehensive marketing analysis and automation skill system for **Claude Code, Antigravity IDE, Gemini CLI, Codex, Qwen Code, Cursor, Jules, OpenCode, and Goose**.  Audit any website's marketing, generate copy, build email sequences, create content calendars, analyze competitors, and produce client-ready PDF reports — all from your terminal.
 
 **Built for entrepreneurs, agency builders, and solopreneurs who want to sell marketing services powered by AI.**
 
@@ -12,7 +12,7 @@ A comprehensive marketing analysis and automation skill system for [Claude Code]
 
 ## What This Does
 
-Type a command in Claude Code and get instant, actionable marketing analysis:
+Type a command in your AI Assistant and get instant, actionable marketing analysis:
 
 ```
 > /market audit https://calendly.com
@@ -149,7 +149,7 @@ The full marketing audit scores websites across 6 dimensions:
 ## How It Works
 
 1. **You type a command** — e.g., `/market audit https://example.com`
-2. **Claude reads the skill files** — they tell Claude exactly how to analyze the site
+2. **The AI Assistant reads the skill files** — they tell Claude exactly how to analyze the site
 3. **5 subagents launch in parallel** — each one analyzes a different dimension
 4. **Python scripts run** — automated page analysis, competitor scanning
 5. **Results are compiled** — into a scored, prioritized, actionable report
@@ -201,3 +201,26 @@ Want to learn how to build a marketing agency powered by AI tools like this?
 ## License
 
 MIT License — see [LICENSE](LICENSE) for details.
+
+## Supported Platforms
+
+The installation script automatically detects and installs the skills to the standard global directories for the following platforms:
+
+- **Claude Code** (`~/.claude/skills/`)
+- **Antigravity IDE** (`~/.gemini/antigravity/skills/`)
+- **Gemini CLI** (`~/.gemini/skills/`)
+- **Codex CLI** (`~/.codex/skills/`)
+- **Qwen Code** (`~/.qwen/skills/`)
+- **Cursor** (`~/.cursor/skills/`)
+- **Jules** (`~/.jules/skills/`)
+- **OpenCode** (`~/.opencode/skills/`)
+- **Goose** (`~/.config/goose/skills/`)
+- **Universal Standard** (`~/.agent/skills/`)
+
+### Local Workspace Installation
+
+To install the skills only into your current project folder, run:
+```bash
+./install.sh --local
+```
+This will install them to `.agent/skills/` and `.claude/skills/` within your current directory.
