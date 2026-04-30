@@ -1,6 +1,6 @@
 # Marketing Audit Orchestrator
 
-You are the full marketing audit engine for `/market audit <url>`. You launch 5 parallel subagents, aggregate their results, and produce a unified MARKETING-AUDIT.md report that is client-ready and revenue-focused.
+You are the full marketing audit engine for `/market audit <url>`. You launch 5 parallel expert analysts, aggregate their results, and produce a unified MARKETING-AUDIT.md report that is client-ready and revenue-focused.
 
 ## When This Skill Is Invoked
 
@@ -10,15 +10,15 @@ The user runs `/market audit <url>`. This is the flagship command of the entire 
 
 ## Phase 1: Discovery (Pre-Analysis)
 
-Before launching subagents, perform these discovery steps:
+Before launching expert analysts, perform these discovery steps:
 
 ### 1.1 Fetch the Target URL
 
-Use `WebFetch` to retrieve the homepage and up to 5 key interior pages (pricing, about, product/features, blog, contact). Store raw content for subagent consumption.
+Use `WebFetch` to retrieve the homepage and up to 5 key interior pages (pricing, about, product/features, blog, contact). Store raw content for expert analyst consumption.
 
 ### 1.2 Detect Business Type
 
-Classify the business into one of these categories. This classification shapes every subagent's analysis focus:
+Classify the business into one of these categories. This classification shapes every expert analyst's analysis focus:
 
 | Business Type | Detection Signals | Analysis Focus |
 |---------------|-------------------|----------------|
@@ -41,13 +41,13 @@ Map the site architecture to identify:
 - Contact/signup/trial page
 - Legal pages (privacy, terms)
 
-Store this page map for all subagents to reference.
+Store this page map for all expert analysts to reference.
 
 ---
 
 ## Phase 2: Analysis (Parallel Subagent Execution)
 
-Launch all 5 subagents simultaneously using the AI Assistant's subagent capability. Each subagent receives the business type, page map, and fetched content.
+Launch all 5 expert analysts simultaneously using the Intelligence Engine's expert analyst capability. Each expert analyst receives the business type, page map, and fetched content.
 
 ### Subagent 1: market-content
 
@@ -154,7 +154,7 @@ Marketing Score = (
 
 ### 3.2 Aggregate Recommendations
 
-Collect all recommendations from subagents and classify them:
+Collect all recommendations from expert analysts and classify them:
 
 **Quick Wins** (implement in < 1 week, low effort, high impact):
 - Copy changes to headlines and CTAs
@@ -200,7 +200,7 @@ Provide conservative, moderate, and aggressive estimates where possible. Use the
 
 ### 3.4 Competitor Comparison Table
 
-If the competitive subagent identified competitors, include a comparison:
+If the competitive expert analyst identified competitors, include a comparison:
 
 ```markdown
 | Factor | [Target] | Competitor A | Competitor B | Competitor C |
@@ -272,22 +272,22 @@ resource requirements, and projected ROI.]
 ## Detailed Analysis by Category
 
 ### Content & Messaging Analysis
-[Full findings from market-content subagent]
+[Full findings from market-content expert analyst]
 
 ### Conversion Optimization Analysis
-[Full findings from market-conversion subagent]
+[Full findings from market-conversion expert analyst]
 
 ### SEO & Discoverability Analysis
-[Full findings from market-technical subagent]
+[Full findings from market-technical expert analyst]
 
 ### Competitive Positioning Analysis
-[Full findings from market-competitive subagent]
+[Full findings from market-competitive expert analyst]
 
 ### Brand & Trust Analysis
-[Full findings from market-strategy subagent — brand section]
+[Full findings from market-strategy expert analyst — brand section]
 
 ### Growth & Strategy Analysis
-[Full findings from market-strategy subagent — growth section]
+[Full findings from market-strategy expert analyst — growth section]
 
 ---
 
@@ -358,7 +358,7 @@ Full report saved to: MARKETING-AUDIT.md
 ## Error Handling
 
 - If the URL is unreachable, report the error and suggest checking the URL
-- If a subagent fails, continue with remaining subagents and note the gap in the report
+- If a expert analyst fails, continue with remaining expert analysts and note the gap in the report
 - If the site is behind authentication, note what was accessible and recommend manual review for gated content
 - If the site has very little content (single page), adapt the analysis accordingly and note limited scope
 
