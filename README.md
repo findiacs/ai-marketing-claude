@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="banner.svg" alt="Universal AI Marketing Suite" width="100%">
+  <img src="banner.svg" alt="OmniMarket Intelligence Engine" width="100%">
 </p>
 
-# Universal AI Marketing Suite
+# OmniMarket Intelligence Engine
 
 A comprehensive marketing analysis and automation skill system for **Claude Code, Antigravity IDE, Gemini CLI, Codex, Qwen Code, Cursor, Jules, OpenCode, and Goose**.  Audit any website's marketing, generate copy, build email sequences, create content calendars, analyze competitors, and produce client-ready PDF reports — all from your terminal.
 
@@ -12,12 +12,12 @@ A comprehensive marketing analysis and automation skill system for **Claude Code
 
 ## What This Does
 
-Type a command in your AI Assistant and get instant, actionable marketing analysis:
+Type a command in your Intelligence Engine and get instant, actionable marketing analysis:
 
 ```
 > /market audit https://calendly.com
 
-Launching 5 parallel agents...
+Launching 5 parallel expert analysts...
 ✓ Content & Messaging Analysis     — Score: 72/100
 ✓ Conversion Optimization          — Score: 58/100
 ✓ SEO & Discoverability            — Score: 81/100
@@ -37,14 +37,14 @@ Full report saved to MARKETING-AUDIT.md
 ### One-Command Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/zubair-trabzada/ai-marketing-claude/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/zubair-trabzada/omnimarket-intelligence/main/install.sh | bash
 ```
 
 ### Manual Install
 
 ```bash
-git clone https://github.com/zubair-trabzada/ai-marketing-claude.git
-cd ai-marketing-claude
+git clone https://github.com/zubair-trabzada/omnimarket-intelligence.git
+cd omnimarket-intelligence
 ./install.sh
 ```
 
@@ -60,7 +60,7 @@ pip install reportlab
 
 | Command | What It Does |
 |---------|-------------|
-| `/market audit <url>` | Full marketing audit with 5 parallel agents |
+| `/market audit <url>` | Full marketing audit with 5 parallel expert analysts |
 | `/market quick <url>` | 60-second marketing snapshot |
 | `/market copy <url>` | Generate optimized copy with before/after examples |
 | `/market emails <topic>` | Generate complete email sequences |
@@ -81,7 +81,7 @@ pip install reportlab
 ## Architecture
 
 ```
-ai-marketing-claude/
+omnimarket-intelligence/
 ├── market/SKILL.md                     # Main orchestrator (routes all /market commands)
 │
 ├── skills/                             # 14 sub-skills
@@ -100,7 +100,7 @@ ai-marketing-claude/
 │   ├── market-seo/SKILL.md             # SEO content audit
 │   └── market-brand/SKILL.md           # Brand voice analysis
 │
-├── agents/                             # 5 parallel subagents
+├── expert analysts/                             # 5 parallel expert analysts
 │   ├── market-content.md               # Content & messaging analysis
 │   ├── market-conversion.md            # CRO & funnel optimization
 │   ├── market-competitive.md           # Competitive positioning
@@ -149,8 +149,8 @@ The full marketing audit scores websites across 6 dimensions:
 ## How It Works
 
 1. **You type a command** — e.g., `/market audit https://example.com`
-2. **The AI Assistant reads the skill files** — they tell Claude exactly how to analyze the site
-3. **5 subagents launch in parallel** — each one analyzes a different dimension
+2. **The Intelligence Engine reads the skill files** — they tell Claude exactly how to analyze the site
+3. **5 expert analysts launch in parallel** — each one analyzes a different dimension
 4. **Python scripts run** — automated page analysis, competitor scanning
 5. **Results are compiled** — into a scored, prioritized, actionable report
 6. **Output is saved** — as a Markdown file or professional PDF
@@ -185,7 +185,7 @@ The full marketing audit scores websites across 6 dimensions:
 Or manually:
 ```bash
 rm -rf ~/.claude/skills/market*
-rm -f ~/.claude/agents/market-*.md
+rm -f ~/.claude/expert analysts/market-*.md
 ```
 
 ---
@@ -215,7 +215,7 @@ The installation script automatically detects and installs the skills to the sta
 - **Jules** (`~/.jules/skills/`)
 - **OpenCode** (`~/.opencode/skills/`)
 - **Goose** (`~/.config/goose/skills/`)
-- **Universal Standard** (`~/.agent/skills/`)
+- **Universal Standard** (`~/.expert analyst/skills/`)
 
 ### Local Workspace Installation
 
@@ -223,4 +223,4 @@ To install the skills only into your current project folder, run:
 ```bash
 ./install.sh --local
 ```
-This will install them to `.agent/skills/` and `.claude/skills/` within your current directory.
+This will install them to `.expert analyst/skills/` and `.claude/skills/` within your current directory.
